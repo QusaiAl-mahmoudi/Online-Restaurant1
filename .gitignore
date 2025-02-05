@@ -1,0 +1,133 @@
+package Restaurant;
+
+import  java.io.*;
+import java.util.*;
+
+public class Main {
+    static int discount=0;
+    public static void discount(int Amount){
+      discount =Amount+discount;
+        
+    }
+  static String[] appetizers = {"سلطة بالجبن", "سلطة عادي", "سلطة خيار", "بابه غنون", "حمص", "سلطة فواكة", "مخلل", "سلطة شرائح"};
+  static int[] appetizerPrices = {1500, 1200, 4500, 700, 900, 1000, 1200, 1700};
+
+  static String[] mainDishes = {"سمك مشوي", "ماكس بحري كبير", "ماكس بحري صغير", "لحم برست"};
+  static int[] mainDishPrices = {5400, 23000, 34000, 4500};
+
+  static String[] juices = {"عصير فرولة", "عصير مانجو", "عصير جوافة", "عصير أفوكادو", "كوكتيل طبقات", "عصير ليمون", "عصير برتقال", "عصير مانجو طبيعي", "عصير موز"};
+  static int[] juicePrices = {1600, 1300, 1400, 2500, 2100, 600, 1200, 1900, 1300};
+
+  static String []sweets = {"عريكة","كنافة","بنت الصحن","مقلاوة","تشيز كيك","هريسة"};
+  static int []sweetsPrices ={2500,1700,6000,1300,2100,800};
+  
+  static Scanner scanner = new Scanner(System.in);
+
+    public static void printMenu(String[] items, int[] prices) {
+        for (int i = 0; i < items.length; i++) {
+            System.out.println((i + 1) + "- " + items[i] + "   السعر : " + prices[i]);
+        }
+      
+     // public void menu(){
+        
+      //}
+      
+      
+    }
+  
+    public static void main(String[] args)throws IOException  {
+        String continuation;
+        int choice, quantity;
+        int Amount ;
+      String g;
+      File file;
+
+        do { 
+          ;
+          Shapce();
+          System.out.println();
+            System.out.println("مرحبا بكم في مطعم ....\n  1-  قسم المقبلات.\n 2- قسم البحري.\n 3- قسم العصائر.\n 4- قسم الحلويات");
+            System.out.println("<<ادخل رقم القسم الذي تريده>>:");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("قسم المقبلات:");
+                    printMenu(appetizers, appetizerPrices);
+                    break;
+                case 2:
+                    System.out.println("قسم البحري:");
+                    printMenu(mainDishes, mainDishPrices);
+                    break;
+                case 3:
+                    System.out.println("قسم العصائر:");
+                    printMenu(juices, juicePrices);
+                    break;
+              case 4:
+              System.out.println("قسم الحلويات :");
+              printMenu(sweets,sweetsPrices);
+              break;
+                default:
+                    System.out.println("الرقم الذي ادخلته خطأ");
+                    break;
+            }
+
+            System.out.println("<< ادخل رقم الوجبة التي تريدها >>:");
+            int mealChoice = scanner.nextInt();
+
+            System.out.println("ادخل الكمية:");
+            quantity = scanner.nextInt();
+
+          Amount= quantity * getPrice(choice, mealChoice);
+            g=getmeal(choice,mealChoice);
+            file=new File("/storage/emulated/0/الفاتورة النهائية.text"); 
+ 
+           discount(Amount);
+            System.out.println("هل تريد طلب شيء آخر؟ (نعم/لا)");
+            continuation = scanner.next();
+        } while (continuation.equalsIgnoreCase("نعم"));
+
+         Shapce();
+      System.out.println();
+     System.out.print(" أدخل العنوان الذي تريد أن نرسل له هذا الطلب .");
+      String address = scanner.next();
+      System.out.println("شكرا لزيارتكم لمطعمنا.\n");
+        System.out.println("الإجمالي بعد الخصم: " +(discount-discount*0.085));
+    }
+
+    public static int getPrice(int category, int index) {
+        switch (category) {
+            case 1:
+                return appetizerPrices[index - 1];
+            case 2:
+                return mainDishPrices[index - 1];
+            case 3:
+               return juicePrices[index - 1];
+            case 4:
+               return sweetsPrices[index-1];
+          default:
+             return 0;
+        }
+    }
+  public static String getmeal(int category, int index) {
+    switch(category){
+      case 1:
+      return appetizers[index-1];
+      case 2:
+      return mainDishes[index-1];
+      case 3:
+      return juices[index-1];
+      case 4:
+      return sweets[index-1];
+      default:
+      return "";
+    }
+    
+  }
+  public static void Shapce(){
+    for(int i=0;i<30;i++)
+    System.out.print("-");
+    
+  }
+}
+     
